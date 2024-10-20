@@ -1,0 +1,11 @@
+@import './base.css';
+
+:root {
+    --primary-color: #1C1C1C;
+    --primary-bg: #fff;
+    --primary-gray: #787878;
+    --primary-gray-bg: #00000078;
+    --secondary-color: #117DC1;
+    --tertiary-color: #EDF9FF;
+}
+
