@@ -1,5 +1,7 @@
 # catalog
 
+gh pages https://lexabo.github.io/catalog/
+
 ## Project setup
 ```
 yarn install
