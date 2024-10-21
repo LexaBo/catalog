@@ -1,6 +1,15 @@
 <template>
   <div class="catalog">
-    <template v-if="!api.users.loader && !api.users.error">
+    <Loader
+        v-if="api.users.loader"
+        class="catalog__loader"
+    />
+    <Error
+        v-else-if="api.users.error"
+        column
+        class="catalog__error"
+    />
+    <template v-else>
       <Accordion
           v-for="user in users"
           :key="user.id"
@@ -11,7 +20,12 @@
         <template #title>
           <h2 class="catalog-item__title">{{ user.name }}</h2>
         </template>
-        <template v-if="!api.albums.loader && !api.albums.error">
+        <Loader
+            v-if="api.albums.loader"
+            class="catalog-item__loader"
+        />
+        <Error v-else-if="api.albums.error"/>
+        <template v-else>
           <Accordion
               v-for="album in getCurrentItems(user.id, albums)"
               :key="album.id"
@@ -24,33 +38,19 @@
                 {{ album.title }}
               </h3>
             </template>
-            <GridPhotos
-                v-if="!api.photos.loader && !api.photos.error"
-                :photos="getCurrentItems(album.id, photos)"
-            />
             <Loader
+                v-if="api.photos.loader"
                 class="catalog-item-content__loader"
-                v-else-if="api.photos.loader"
             />
             <Error v-else-if="api.photos.error"/>
+            <GridPhotos
+                v-else
+                :photos="getCurrentItems(album.id, photos)"
+            />
           </Accordion>
         </template>
-        <Loader
-            class="catalog-item__loader"
-            v-else-if="api.albums.loader"
-        />
-        <Error v-else-if="api.albums.error"/>
       </Accordion>
     </template>
-    <Loader
-        v-else-if="api.users.loader"
-        class="catalog__loader"
-    />
-    <Error
-        v-else-if="api.users.error"
-        column
-        class="catalog__error"
-    />
   </div>
 </template>
 
